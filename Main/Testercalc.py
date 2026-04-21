@@ -1,6 +1,6 @@
 import random
 import math
-import Testmain
+import Importfunc
 import testerdot
 number1 = float(input('Enter your first number: '))
 sign = '+'
@@ -33,8 +33,8 @@ def calculate(number1, number2):
             number1 = number1 ** number2
         elif sign == '_/':
             operator = "_/"
-            print(number1, "_/", number2, "=", Testmain.root(number1, number2))
-            number1 = Testmain.root(number1, number2)
+            print(number1, "_/", number2, "=", Importfunc.root(number1, number2))
+            number1 = Importfunc.root(number1, number2)
         elif sign == '^^':
             operator = "^^"
             if number1 > 6 and number2 >= 3 or number1 > 2 and number2 > 3 or number1 > 1 and number2 > 5 or number1 > 10042 and number2 > 1:

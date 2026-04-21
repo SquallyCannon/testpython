@@ -13,7 +13,7 @@ else:
     glb_highest_score = 0
     glb_highest_round = 0
 
-runrandom = "y" #input("Random? y/n: ")
+runrandom = "n" #input("Random? y/n: ")
 runrandscore = "n"
 runrandrank = "n"
 runrandranvalue = "n"
@@ -27,7 +27,7 @@ game_scale = 0
 
 game_state = True
 base_game_lives = 3 #int(input('Number of lives: '))
-game_end = 100 #int(input('Number of rounds: '))
+game_end = 10000 #int(input('Number of rounds: '))
 high_round = 0
 high_score = 0
 highest_round = 0
