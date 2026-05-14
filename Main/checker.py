@@ -7,11 +7,7 @@ game_state = True
 gamer_state = True
 turn = 'Black'
 startturn = 'Black'
-boardx = '8x8'
-if boardx == '8x8':
-    boardx = 8
-elif boardx == '16x16':
-    boardx = 16
+boardx = 8
 widths =3
 
 root = Tk()
@@ -19,6 +15,8 @@ root.geometry(f'{boardx*40+40}x{boardx*33+33}')
 root.title('ArchCheckers')
 x=True
 if x:
+    randomizerB = False
+    randomizerW = False
     nojumpcapture = False
     game_board = 'An error has occored'
     Nonev = 'None valid move.'
@@ -273,7 +271,7 @@ if boardfuctions:
                         else:
                             toPValid = True
                             rowt[to[1]] = 'BP'
-                    elif rowt[to[1]] in ('WP', 'WQ') and to[0] in (2,3,4,5,6,7) and to[1] in (2,3,4,5,6,7):
+                    elif rowt[to[1]] in ('WP', 'WQ') and to[0] in range(2,boardx) and to[1] in range(2,boardx):
                         extraturn += 1
                         if move[0] - to[0] > 0:
                             movetake1 = 1
@@ -365,7 +363,7 @@ if boardfuctions:
                         else:
                             toPValid = True
                             rowt[to[1]] = 'WP'
-                    elif rowt[to[1]] in ('BP', 'BQ') and to[0] in (2,3,4,5,6,7) and to[1] in (2,3,4,5,6,7):
+                    elif rowt[to[1]] in ('BP', 'BQ') and to[0] in range(2,boardx) and to[1] in range(2,boardx):
                         extraturn += 1
                         if move[0] - to[0] > 0:
                             movetake1 = 1
@@ -455,80 +453,229 @@ if guifuctions:
         checkerp = True
         lbl4.configure(text = f"Turn: {turn}")
         lbl6.configure(text = f"Fail: {failr}")
-        for r in range(boardx):
-            for c in range(boardx+1):
-                if c == boardx:
-                    if checkerp == False:
-                        checkerp = True
-                    else:
-                        checkerp = False
-                rowm2 = [r+1,c+1]
-                rowm = game_board[rowm2[0]]
-                if rowm[rowm2[1]] in ('--'):
-                    if checkerp == True:
-                        Button(
-                            root, width=widths,
-                            background=emptycolor2,
-                            activebackground=emptytextcolor2
-                        ).grid(row=r+1, column=c+1)
-                        checkerp = False
-                    elif checkerp == False:
-                        Button(
-                            root, width=widths,
-                            background=emptycolor1,
-                            activebackground=emptytextcolor1
-                        ).grid(row=r+1, column=c+1)
-                        checkerp = True
-                elif rowm[rowm2[1]] in ('BQ', 'BP'):
-                    if rowm[rowm2[1]] == 'BQ':
-                        Button(
-                            root,
-                            text="BQ", width=widths,
-                            command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
-                            background= BQcolor,
-                            foreground= BQtextcolor,
-                            activebackground= BQtextcolor,
-                            activeforeground= BQcolor
-                        ).grid(row=r+1, column=c+1)
-                    else:
-                        Button(
-                            root,
-                            text="BP", width=widths,
-                            command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
-                            background=BPcolor,
-                            foreground= BPtextcolor,
-                            activebackground=BPtextcolor,
-                            activeforeground=BPcolor
-                        ).grid(row=r+1, column=c+1)
-                    if checkerp == False:
-                        checkerp = True
-                    else:
-                        checkerp = False
-                elif rowm[rowm2[1]] in ('WQ', 'WP'):
-                    if rowm[rowm2[1]] == 'WQ':
-                        Button(
-                            root,
-                            text="WQ", width=widths,
-                            command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
-                            background=WQcolor,
-                            foreground=WQtextcolor,
-                            activebackground=WQtextcolor,
-                            activeforeground=WQcolor
-                        ).grid(row=r+1, column=c+1)
-                    else:
-                        Button(
-                            root,
-                            text="WP", width=widths,
-                            command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
-                            background=WPcolor,
-                            foreground=WPtextcolor,
-                            activebackground=WPtextcolor,
-                            activeforeground=WPcolor
-                        ).grid(row=r+1, column=c+1)
-                    if checkerp == False:
-                        checkerp = True
-                    else:
-                        checkerp = False
+        if turn == 'Black' and randomizerB:
+            print('this mode is unfinished')
+            for r in range(boardx):
+                for c in range(boardx+1):
+                    if c == boardx:
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    rowm2 = [r+1,c+1]
+                    rowm = game_board[rowm2[0]]
+                    if rowm[rowm2[1]] in ('--'):
+                        if checkerp == True:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor2,
+                                activebackground=emptytextcolor2
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = False
+                        elif checkerp == False:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor1,
+                                activebackground=emptytextcolor1
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = True
+                    elif rowm[rowm2[1]] in ('BQ', 'BP'):
+                        if rowm[rowm2[1]] == 'BQ':
+                            Button(
+                                root,
+                                text="BQ", width=widths,
+                                background= BQcolor,
+                                foreground= BQtextcolor,
+                                activebackground= BQtextcolor,
+                                activeforeground= BQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="BP", width=widths,
+                                background=BPcolor,
+                                foreground= BPtextcolor,
+                                activebackground=BPtextcolor,
+                                activeforeground=BPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    elif rowm[rowm2[1]] in ('WQ', 'WP'):
+                        if rowm[rowm2[1]] == 'WQ':
+                            Button(
+                                root,
+                                text="WQ", width=widths,
+                                background=WQcolor,
+                                foreground=WQtextcolor,
+                                activebackground=WQtextcolor,
+                                activeforeground=WQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="WP", width=widths,
+                                background=WPcolor,
+                                foreground=WPtextcolor,
+                                activebackground=WPtextcolor,
+                                activeforeground=WPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+            clicked(random.randint(1,boardx), random.randint(1,boardx))
+        elif turn == 'White' and randomizerW:
+            print('this mode is unfinished')
+            for r in range(boardx):
+                for c in range(boardx+1):
+                    if c == boardx:
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    rowm2 = [r+1,c+1]
+                    rowm = game_board[rowm2[0]]
+                    if rowm[rowm2[1]] in ('--'):
+                        if checkerp == True:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor2,
+                                activebackground=emptytextcolor2
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = False
+                        elif checkerp == False:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor1,
+                                activebackground=emptytextcolor1
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = True
+                    elif rowm[rowm2[1]] in ('BQ', 'BP'):
+                        if rowm[rowm2[1]] == 'BQ':
+                            Button(
+                                root,
+                                text="BQ", width=widths,
+                                background= BQcolor,
+                                foreground= BQtextcolor,
+                                activebackground= BQtextcolor,
+                                activeforeground= BQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="BP", width=widths,
+                                background=BPcolor,
+                                foreground= BPtextcolor,
+                                activebackground=BPtextcolor,
+                                activeforeground=BPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    elif rowm[rowm2[1]] in ('WQ', 'WP'):
+                        if rowm[rowm2[1]] == 'WQ':
+                            Button(
+                                root,
+                                text="WQ", width=widths,
+                                background=WQcolor,
+                                foreground=WQtextcolor,
+                                activebackground=WQtextcolor,
+                                activeforeground=WQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="WP", width=widths,
+                                background=WPcolor,
+                                foreground=WPtextcolor,
+                                activebackground=WPtextcolor,
+                                activeforeground=WPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+            clicked(random.randint(1,boardx), random.randint(1,boardx))
+
+
+        else:
+            for r in range(boardx):
+                for c in range(boardx+1):
+                    if c == boardx:
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    rowm2 = [r+1,c+1]
+                    rowm = game_board[rowm2[0]]
+                    if rowm[rowm2[1]] in ('--'):
+                        if checkerp == True:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor2,
+                                activebackground=emptytextcolor2
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = False
+                        elif checkerp == False:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor1,
+                                activebackground=emptytextcolor1
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = True
+                    elif rowm[rowm2[1]] in ('BQ', 'BP'):
+                        if rowm[rowm2[1]] == 'BQ':
+                            Button(
+                                root,
+                                text="BQ", width=widths,
+                                command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
+                                background= BQcolor,
+                                foreground= BQtextcolor,
+                                activebackground= BQtextcolor,
+                                activeforeground= BQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="BP", width=widths,
+                                command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
+                                background=BPcolor,
+                                foreground= BPtextcolor,
+                                activebackground=BPtextcolor,
+                                activeforeground=BPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    elif rowm[rowm2[1]] in ('WQ', 'WP'):
+                        if rowm[rowm2[1]] == 'WQ':
+                            Button(
+                                root,
+                                text="WQ", width=widths,
+                                command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
+                                background=WQcolor,
+                                foreground=WQtextcolor,
+                                activebackground=WQtextcolor,
+                                activeforeground=WQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="WP", width=widths,
+                                command=lambda posy=r, posx=c: clicked(posy+1, posx+1),
+                                background=WPcolor,
+                                foreground=WPtextcolor,
+                                activebackground=WPtextcolor,
+                                activeforeground=WPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
         if debugon:
             Button(
             root, text='Skip Turn', width=9,
@@ -573,82 +720,229 @@ if guifuctions:
         clear_board()
         global checkerp, boardx
         checkerp = True
-        for r in range(boardx):
-            for c in range(boardx+1):
-                if c == boardx:
-                    if checkerp == False:
-                        checkerp = True
-                    else:
-                        checkerp = False
-                rowm2 = [r+1,c+1]
-                rowm = game_board[rowm2[0]]
-                if rowm[rowm2[1]] in ('--'):
-                    if checkerp == True:
-                        Button(
-                            root, width=widths,
-                            background=emptycolor2,
-                            command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
-                            activebackground=emptytextcolor2,
-                        ).grid(row=r+1, column=c+1)
-                        checkerp = False
-                    elif checkerp == False:
-                        Button(
-                            root, width=widths,
-                            background=emptycolor1,
-                            command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
-                            activebackground=emptytextcolor1,
-                        ).grid(row=r+1, column=c+1)
-                        checkerp = True
-                elif rowm[rowm2[1]] in ('BQ', 'BP'):
-                    if rowm[rowm2[1]] == 'BQ':
-                        Button(
-                            root,
-                            text="BQ", width=widths,
-                            command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
-                            background=BQcolor,
-                            foreground= BQtextcolor,
-                            activebackground=BQtextcolor,
-                            activeforeground=BQcolor
-                        ).grid(row=r+1, column=c+1)
-                    else:
-                        Button(
-                            root,
-                            text="BP", width=widths,
-                            command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
-                            background=BPcolor,
-                            foreground= BPtextcolor,
-                            activebackground=BPtextcolor,
-                            activeforeground=BPcolor
-                        ).grid(row=r+1, column=c+1)
-                    if checkerp == False:
-                        checkerp = True
-                    else:
-                        checkerp = False
-                elif rowm[rowm2[1]] in ('WQ', 'WP'):
-                    if rowm[rowm2[1]] == 'WQ':
-                        Button(
-                            root,
-                            text="WQ", width=widths,
-                            command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
-                            background=WQcolor,
-                            foreground=WQtextcolor,
-                            activebackground=WQtextcolor,
-                            activeforeground=WQcolor
-                        ).grid(row=r+1, column=c+1)
-                    else:
-                        Button(
-                            root,
-                            text="WP", width=widths,
-                            command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
-                            background=WPcolor,
-                            foreground=WPtextcolor,
-                            activebackground=WPtextcolor,
-                            activeforeground=WPcolor
-                        ).grid(row=r+1, column=c+1)
-                    if checkerp == False:
-                        checkerp = True
-                    else:
-                        checkerp = False
+        if turn == 'Black' and randomizerB:
+            for r in range(boardx):
+                for c in range(boardx+1):
+                    if c == boardx:
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    rowm2 = [r+1,c+1]
+                    rowm = game_board[rowm2[0]]
+                    if rowm[rowm2[1]] in ('--'):
+                        if checkerp == True:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor2,
+                                activebackground=emptytextcolor2
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = False
+                        elif checkerp == False:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor1,
+                                activebackground=emptytextcolor1
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = True
+                    elif rowm[rowm2[1]] in ('BQ', 'BP'):
+                        if rowm[rowm2[1]] == 'BQ':
+                            Button(
+                                root,
+                                text="BQ", width=widths,
+                                background= BQcolor,
+                                foreground= BQtextcolor,
+                                activebackground= BQtextcolor,
+                                activeforeground= BQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="BP", width=widths,
+                                background=BPcolor,
+                                foreground= BPtextcolor,
+                                activebackground=BPtextcolor,
+                                activeforeground=BPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    elif rowm[rowm2[1]] in ('WQ', 'WP'):
+                        if rowm[rowm2[1]] == 'WQ':
+                            Button(
+                                root,
+                                text="WQ", width=widths,
+                                background=WQcolor,
+                                foreground=WQtextcolor,
+                                activebackground=WQtextcolor,
+                                activeforeground=WQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="WP", width=widths,
+                                background=WPcolor,
+                                foreground=WPtextcolor,
+                                activebackground=WPtextcolor,
+                                activeforeground=WPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+            clicked2(random.randint(move[0]-1,move[0]+1), random.randint(move[1]-1,move[1]+1))
+        elif turn == 'White' and randomizerW:
+            for r in range(boardx):
+                for c in range(boardx+1):
+                    if c == boardx:
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    rowm2 = [r+1,c+1]
+                    rowm = game_board[rowm2[0]]
+                    if rowm[rowm2[1]] in ('--'):
+                        if checkerp == True:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor2,
+                                activebackground=emptytextcolor2
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = False
+                        elif checkerp == False:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor1,
+                                activebackground=emptytextcolor1
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = True
+                    elif rowm[rowm2[1]] in ('BQ', 'BP'):
+                        if rowm[rowm2[1]] == 'BQ':
+                            Button(
+                                root,
+                                text="BQ", width=widths,
+                                background= BQcolor,
+                                foreground= BQtextcolor,
+                                activebackground= BQtextcolor,
+                                activeforeground= BQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="BP", width=widths,
+                                background=BPcolor,
+                                foreground= BPtextcolor,
+                                activebackground=BPtextcolor,
+                                activeforeground=BPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    elif rowm[rowm2[1]] in ('WQ', 'WP'):
+                        if rowm[rowm2[1]] == 'WQ':
+                            Button(
+                                root,
+                                text="WQ", width=widths,
+                                background=WQcolor,
+                                foreground=WQtextcolor,
+                                activebackground=WQtextcolor,
+                                activeforeground=WQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="WP", width=widths,
+                                background=WPcolor,
+                                foreground=WPtextcolor,
+                                activebackground=WPtextcolor,
+                                activeforeground=WPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+            clicked2(random.randint(move[0]-1,move[0]+1), random.randint(move[1]-1,move[1]+1))
+        
+        
+        else:
+            for r in range(boardx):
+                for c in range(boardx+1):
+                    if c == boardx:
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    rowm2 = [r+1,c+1]
+                    rowm = game_board[rowm2[0]]
+                    if rowm[rowm2[1]] in ('--'):
+                        if checkerp == True:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor2,
+                                command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
+                                activebackground=emptytextcolor2,
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = False
+                        elif checkerp == False:
+                            Button(
+                                root, width=widths,
+                                background=emptycolor1,
+                                command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
+                                activebackground=emptytextcolor1,
+                            ).grid(row=r+1, column=c+1)
+                            checkerp = True
+                    elif rowm[rowm2[1]] in ('BQ', 'BP'):
+                        if rowm[rowm2[1]] == 'BQ':
+                            Button(
+                                root,
+                                text="BQ", width=widths,
+                                command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
+                                background=BQcolor,
+                                foreground= BQtextcolor,
+                                activebackground=BQtextcolor,
+                                activeforeground=BQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="BP", width=widths,
+                                command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
+                                background=BPcolor,
+                                foreground= BPtextcolor,
+                                activebackground=BPtextcolor,
+                                activeforeground=BPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
+                    elif rowm[rowm2[1]] in ('WQ', 'WP'):
+                        if rowm[rowm2[1]] == 'WQ':
+                            Button(
+                                root,
+                                text="WQ", width=widths,
+                                command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
+                                background=WQcolor,
+                                foreground=WQtextcolor,
+                                activebackground=WQtextcolor,
+                                activeforeground=WQcolor
+                            ).grid(row=r+1, column=c+1)
+                        else:
+                            Button(
+                                root,
+                                text="WP", width=widths,
+                                command=lambda posy=r, posx=c: clicked2(posy+1, posx+1),
+                                background=WPcolor,
+                                foreground=WPtextcolor,
+                                activebackground=WPtextcolor,
+                                activeforeground=WPcolor
+                            ).grid(row=r+1, column=c+1)
+                        if checkerp == False:
+                            checkerp = True
+                        else:
+                            checkerp = False
         if debugon:
             Button(
             root, text='Skip Turn', width=9,
@@ -788,6 +1082,7 @@ if guifuctions:
         BQcolor = "#{:06x}".format(random.randint(0, 0xFFFFFF))
         buttonscolor = "#{:06x}".format(random.randint(0, 0xFFFFFF))
         draw_board()
+
 extrafuctions = True
 if extrafuctions:
     def skiper():
@@ -984,3 +1279,5 @@ while gamer_state == True:
     else:
         gamer_state = False
         ##print('game end')
+        root.destroy()
+root.mainloop()
