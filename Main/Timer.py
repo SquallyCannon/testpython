@@ -3,12 +3,13 @@ import math
 import tkinter as tk
 from tkinter import *
 root = Tk()
-root.geometry(f'{650}x{250}')
+root.geometry(f'{650}x{350}')
 root.title('Timer')
 
 boot = time.perf_counter()
 Tickspeed = 1 #60*60*24
 offset = 0
+pauseoffset = 0
 addtime = 0
 multime = 1
 Tp = 0
@@ -34,12 +35,26 @@ RD = 0
 RC = 0
 RM = 0
 endcorrect = True
+pause = False
 
 lbl = Label(root, text = f"{int(RM)}{int(RC)}{int(RD)}{int(Ry)}  {Rd3}{Rd2}{Rd1}  {Rh2}{Rh}:{Rm2}{Rm}:{Rs}", padx=10, pady= 10, font=("Impact",30))
 lbl.grid(row=1, column=0, columnspan= 7)
 
 def draw():
-    lbl.configure(text = f"{int(RM)}{int(RC)}{int(RD)}{int(Ry)}  {Rd3}{Rd2}{Rd1}  {Rh2}{Rh}:{Rm2}{Rm}:{Rs}")
+    if pause == False:
+        lbl.configure(text = f"{int(RM)}{int(RC)}{int(RD)}{int(Ry)}  {Rd3}{Rd2}{Rd1}  {Rh2}{Rh}:{Rm2}{Rm}:{Rs}")
+
+def reset():
+    global multime, timer
+    multime -= timer
+    print('time reset')
+def pauses():
+    global pause
+    if pause:
+        pause = False
+    else:
+        pause = True
+
 
 addition = True
 if addition:
@@ -109,27 +124,186 @@ if multiply:
     def mult2():
         global multime, timer
         multime += timer
+        print('x2')
     def mult10():
         global multime, timer
         multime += timer*9
+        print('x10')
     def mult100():
         global multime, timer
         multime += timer *99
+        print('x100')
     def mult1k():
         global multime, timer
         multime +=timer *999
+        print('x1000')
     def mult1m():
         global multime, timer
         multime +=timer *999999
+        print('x1000000')
     def mult1b():
         global multime, timer
         multime +=timer *999999999
+        print('x1000000000')
     def mult1t():
         global multime, timer
         multime +=timer *999999999999
+        print('x1000000000000')
+
+subtract = True
+if subtract:
+    def sub1s():
+        global addtime, timer
+        if timer < 1:
+            addtime -= timer
+        else:
+            addtime -=1
+        print('-1')
+    def sub10s():
+        global addtime, timer
+        if timer < 10:
+            addtime -= timer
+        else:
+            addtime -=10
+        print('-10')
+    def sub1m():
+        global addtime, timer
+        if timer < 60:
+            addtime -= timer
+        else:
+            addtime -=60
+        print('-60')
+    def sub10m():
+        global addtime, timer
+        if timer < 600:
+            addtime -= timer
+        else:
+            addtime -=600
+        print('-600')
+    def sub1h():
+        global addtime, timer
+        if timer < 3600:
+            addtime -= timer
+        else:
+            addtime -=3600
+        print('-3600')
+    def sub10h():
+        global addtime, timer
+        if timer < 36000:
+            addtime -= timer
+        else:
+            addtime -=36000
+        print('-36000')
+    def sub1d():
+        global addtime, timer
+        if timer < 86400:
+            addtime -= timer
+        else:
+            addtime -=86400
+        print('-86400')
+    def sub10d():
+        global addtime, timer
+        if timer < 864000:
+            addtime -= timer
+        else:
+            addtime -=864000
+        print('-864000')
+    def sub100d():
+        global addtime, timer
+        if timer < 8640000:
+            addtime -= timer
+        else:
+            addtime -=8640000
+        print('-8640000')
+    def sub1y():
+        global addtime, timer
+        if timer < 31556952:
+            addtime -= timer
+        else:
+            addtime -=31556952
+        print('-31556952')
+    def sub1D():
+        global addtime, timer
+        if timer < 315569520:
+            addtime -= timer
+        else:
+            addtime -=315569520
+        print('-315569520')
+    def sub1C():
+        global addtime, timer
+        if timer < 3155695200:
+            addtime -= timer
+        else:
+            addtime -=3155695200
+        print('-3155695200')
+    def sub1M():
+        global addtime, timer
+        if timer < 31556952000:
+            addtime -= timer
+        else:
+            addtime -=31556952000
+        print('-31556952000')
+    def sub10M():
+        global addtime, timer
+        if timer < 315569520000:
+            addtime -= timer
+        else:
+            addtime -=315569520000
+        print('-315569520000')
+    def sub100M():
+        global addtime, timer
+        if timer < 3155695200000:
+            addtime -= timer
+        else:
+            addtime -=3155695200000
+        print('-3155695200000')
     
+    
+    
+    
+divide = True
+if divide:
+    def div2():
+        global multime, timer
+        multime -= timer/2
+        print('/2')
+    def div10():
+        global multime, timer
+        multime -= timer/(10/9)
+        print('/10')
+    def div100():
+        global multime, timer
+        multime -= timer/(100/99)
+        print('/100')
+    def div1k():
+        global multime, timer
+        multime -= timer/(1000/999)
+        print('/1000')
+    def div1m():
+        global multime, timer
+        multime -= timer/(1000000/999999)
+        print('/1000000')
+    def div1b():
+        global multime, timer
+        multime -= timer/(1000000000/999999999)
+        print('/1000000000')
+    def div1t():
+        global multime, timer
+        multime -= timer/(1000000000000/999999999999)
+        print('/1000000000000')
+    
+
 buttons = True
 if buttons:
+    Button(
+        root, text='Reset', width=9,
+        command=lambda: reset()
+        ).grid(row = 4, column=0, padx=10, pady=5)
+    Button(
+        root, text='Pause', width=9,
+        command=lambda: pauses()
+        ).grid(row = 5, column=0, padx=10, pady=5)
+
     Button(
         root, text='Add 1s', width=9,
         command=lambda: ad1s(),
@@ -189,7 +363,7 @@ if buttons:
     Button(
         root, text='Add 100M', width=9,
         command=lambda: ad100M()
-        ).grid(row = 4, column=0, padx=10, pady=5)
+        ).grid(row = 3, column=7, padx=10, pady=5)
     
     Button(
         root, text='x2', width=9,
@@ -219,9 +393,104 @@ if buttons:
         root, text='x1000000000000', width=9,
         command=lambda: mult1t()
         ).grid(row = 4, column=7, padx=10, pady=5)
+    
+    Button(
+        root, text='/2', width=9,
+        command=lambda: div2()
+        ).grid(row = 5, column=1, padx=10, pady=5)
+    Button(
+        root, text='/10', width=9,
+        command=lambda: div10()
+        ).grid(row = 5, column=2, padx=10, pady=5)
+    Button(
+        root, text='/100', width=9,
+        command=lambda: div100()
+        ).grid(row = 5, column=3, padx=10, pady=5)
+    Button(
+        root, text='/1000', width=9,
+        command=lambda: div1k()
+        ).grid(row = 5, column=4, padx=10, pady=5)
+    Button(
+        root, text='/1000000', width=9,
+        command=lambda: div1m()
+        ).grid(row = 5, column=5, padx=10, pady=5)
+    Button(
+        root, text='/1000000000', width=9,
+        command=lambda: div1b()
+        ).grid(row = 5, column=6, padx=10, pady=5)
+    Button(
+        root, text='/1000000000000', width=9,
+        command=lambda: div1t()
+        ).grid(row = 5, column=7, padx=10, pady=5)
+    
+    Button(
+        root, text='-1s', width=9,
+        command=lambda: sub1s()
+        ).grid(row = 6, column=0, padx=10, pady=5)
+    Button(
+        root, text='-10s', width=9,
+        command=lambda: sub10s()
+        ).grid(row = 6, column=1, padx=10, pady=5)
+    Button(
+        root, text='-1m', width=9,
+        command=lambda: sub1m()
+        ).grid(row = 6, column=2, padx=10, pady=5)
+    Button(
+        root, text='-10m', width=9,
+        command=lambda: sub10m()
+        ).grid(row = 6, column=3, padx=10, pady=5)
+    Button(
+        root, text='-1h', width=9,
+        command=lambda: sub1h()
+        ).grid(row = 6, column=4, padx=10, pady=5)
+    Button(
+        root, text='-10h', width=9,
+        command=lambda: sub10h()
+        ).grid(row = 6, column=5, padx=10, pady=5)
+    Button(
+        root, text='-1d', width=9,
+        command=lambda: sub1d()
+        ).grid(row = 6, column=6, padx=10, pady=5)
+    Button(
+        root, text='-10d', width=9,
+        command=lambda: sub10d()
+        ).grid(row = 7, column=0, padx=10, pady=5)
+    Button(
+        root, text='-100d', width=9,
+        command=lambda: sub100d()
+        ).grid(row = 7, column=1, padx=10, pady=5)
+    Button(
+        root, text='-1y', width=9,
+        command=lambda: sub1y()
+        ).grid(row = 7, column=2, padx=10, pady=5)
+    Button(
+        root, text='-1D', width=9,
+        command=lambda: sub1D()
+        ).grid(row = 7, column=3, padx=10, pady=5)
+    Button(
+        root, text='-1C', width=9,
+        command=lambda: sub1C()
+        ).grid(row = 7, column=4, padx=10, pady=5)
+    Button(
+        root, text='-1M', width=9,
+        command=lambda: sub1M()
+        ).grid(row = 7, column=5, padx=10, pady=5)
+    Button(
+        root, text='-10M', width=9,
+        command=lambda: sub10M()
+        ).grid(row = 7, column=6, padx=10, pady=5)
+    Button(
+        root, text='-100M', width=9,
+        command=lambda: sub100M()
+        ).grid(row = 7, column=7, padx=10, pady=5)
+    
+    Entry(root)
 
 
-Wt = 10
+    
+
+
+Wt = 10000
 Wm = False
 Wh = False
 Wd = False
@@ -295,10 +564,13 @@ if endcorrect:
     RMT = total_yearsT // 1000
 
 lbl2 = Label(root, text = f"{int(RMT)}{int(RCT)}{int(RDT)}{int(RyT)}  {Rd3T}{Rd2T}{Rd1T}  {Rh2T}{RhT}:{Rm2T}{RmT}:{RsT}", padx=10, pady= 10, font=("Impact",30))
-lbl2.grid(row=5, column=0, columnspan= 7)
+lbl2.grid(row=8, column=0, columnspan= 7)
 
 while Ts < Wt:
-    timer = round(time.perf_counter() - boot + offset + addtime + multime, 2)*Tickspeed
+    if pause:
+        pauseoffset = timer-1
+    timer = (round(time.perf_counter() - boot + offset + addtime + multime, 2)*Tickspeed)-pauseoffset
+    
     
     Ts = int(timer)
     Tt = round(timer, 2)
