@@ -5,8 +5,7 @@ import mpmath as mp
 rankmax = 30
 sign = '+'
 scorem = 0
-def redux(number):
-    print(f'Reduxag {number}')
+
 player1 = {
     "User": "Player1",
     "Rank": 20,
@@ -133,19 +132,34 @@ def calculate_scorem(score):
             
     return scorem
 
-#print(calculate_scorem(5000*(2**200)))
-#print(2*76)
+def invert_color(color):
+    color = color.lstrip('#')
+    inverted = list(255 - int(color[i:i+2], 16) for i in (0, 2, 4))
+    return '#{:02x}{:02x}{:02x}'.format(*inverted)
 
 
-#print(round_half_up(random.randint(1000000, 10000000), -7))
-#print(int(100000 * 0.00001 + 0.5) / 0.00001)
 
-#a = float(3.6)
-#n = int(round_half_up(a))
-#print(round_half_up(1.3), n)
+digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_=+[{]}|;:,<.>/?"
 
-#num1 = int(input('num1:'))
-#num2 = int(input('num2:'))
+def int2(number, base):
+    global digits
+    if number == 0:
+        return "0"
+    if base > len(digits):
+        raise ValueError(f"Base exceeds available character set length: {len(digits)}")
+    
+    result = []
+    while number > 0:
+        number, remainder = divmod(number, base)
+        result.append(digits[remainder])
+    return "".join(reversed(result))
 
-#rint(tetration(num1,num2))
-#print(tetration(6, 3))
+def str_int2(text, base=91):
+    number = 0
+    global digits
+    for char in text:
+        number = number * base + digits.index(char)
+    return number
+
+
+print(int2(str_int2("Hello") + str_int2("20000") + str_int2("10"), 91))
