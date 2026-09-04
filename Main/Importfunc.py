@@ -139,7 +139,7 @@ def invert_color(color):
 
 
 
-digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_=+[{]}|;:,<.>/?"
+digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_=+[{]}|;:,<>/?§¶±¼¾½¥¢ØΓΔΦΣΞΨΩβθεζπωѪӔ֎ᴥỻ‡‰╬▄█▌░▒▓╢╤☺☻☼♀♂♠♣♥♦♪♫א"
 
 def int2(number, base):
     global digits
@@ -147,19 +147,50 @@ def int2(number, base):
         return "0"
     if base > len(digits):
         raise ValueError(f"Base exceeds available character set length: {len(digits)}")
+    integer = int(number)
+    decimal = number - integer
     
     result = []
-    while number > 0:
-        number, remainder = divmod(number, base)
+    while integer > 0:
+        integer, remainder = divmod(integer, base)
         result.append(digits[remainder])
-    return "".join(reversed(result))
+    result = "".join(reversed(result))
 
-def str_int2(text, base=91):
-    number = 0
+    if decimal > 0:
+        result += "."
+        for _ in range (16):
+            decimal *= base
+            digit = int(decimal)
+            result += digits[digit]
+            decimal -= digit
+
+            if decimal == 0:
+                break
+    return result
+
+def str_int2(text, base=len(digits)):
     global digits
+    number = 0
+    decimal = 0.0
+    point = False
+    diviser = base
     for char in text:
-        number = number * base + digits.index(char)
-    return number
+        if char == ".":
+            if point:
+                raise ValueError("Dude")
+            point = True
+        elif not point:
+            decimal = (decimal * base) + digits.index(char)
+        else:
+            decimal += digits.index(char)/diviser
+            diviser *= base
+    if point:
+        return number + decimal
+    else:
+        return int(number + decimal)
 
 
-print(int2(str_int2("Hello") + str_int2("20000") + str_int2("10"), 91))
+#print(int2(str_int2("Hello.אא"), len(digits)))
+#print(int2(str_int2("10.1"), len(digits)))
+#print(str_int2("Hello.1ha<<"))
+#print(str_int2("Hello"))
