@@ -7,7 +7,7 @@ game_state = True
 gamer_state = True
 turn = 'Black'
 startturn = 'Black'
-boardx = 32
+boardx = 8
 widths =3
 
 root = Tk()
@@ -713,7 +713,8 @@ if guifuctions:
                         else:
                             checkerp = False
         if debugon:
-            Button(
+            global entry1, entry2, entry3, entry4, entry5, entry6, entry7
+            Button( #skip turn
             root, text='Skip Turn', width=9,
             background=buttonscolor,
             foreground=Buttontextcolor,
@@ -721,7 +722,7 @@ if guifuctions:
             activeforeground=buttonscolor,
             command=lambda: skiper()
             ).place(x=int((boardx*33+33)/3), y=(boardx*32))
-            Button(
+            Button( #end game
                 root, text="End game", width=9,
                 background=buttonscolor,
                 foreground=Buttontextcolor,
@@ -729,7 +730,7 @@ if guifuctions:
                 activeforeground=buttonscolor,
                 command=lambda: ender() 
             ).place(x=int((boardx*33+33)/1.5), y=(boardx*32))
-            Button(
+            Button( #Roll color
                 root, text="Roll color", width=9,
                 background=buttonscolor,
                 foreground=Buttontextcolor,
@@ -737,77 +738,142 @@ if guifuctions:
                 activeforeground=buttonscolor,
                 command=lambda: rollcolor2()
             ).place(x=int((boardx*33+33)/(boardx+4)), y=(boardx*32))
-            Button(
+            Button( #debugempty1-1
                 root, width=10, height=5, name= "debugempty1-1",
                 background=emptycolor1,
                 activebackground=emptytextcolor1
                 ).grid(padx=(50,0), row=30, column=30)
-            Button(
+            Button( #debugempty1-2
                 root, width=10, height=5, name= "debugempty1-2",
                 background=emptytextcolor1,
                 activebackground=emptycolor1
                 ).grid(padx=(50,0), row=31, column=30)
-            Button(
+            Button( #debugempty2-1
                 root, width=10, height=5, name= "debugempty2-1",
                 background=emptycolor2,
                 activebackground=emptytextcolor2
                 ).grid(row=30, column=31)
-            Button(
+            Button( #debugempty2-2
                 root, width=10, height=5, name= "debugempty2-2",
                 background=emptytextcolor2,
                 activebackground=emptycolor2
                 ).grid(row=31, column=31)
-            Button(
+            Button( #debugWP1
                 root, width=10, height=5, name= "debugWP1",
                 background=WPcolor,
                 activebackground=WPtextcolor
                 ).grid(row=30, column=32)
-            Button(
+            Button( #debugWP2
                 root, width=10, height=5, name= "debugWP2",
                 background=WPtextcolor,
                 activebackground=WPcolor
                 ).grid(row=31, column=32)
-            Button(
+            Button( #debugWQ1
                 root, width=10, height=5,  name= "debugWQ1",
                 background=WQcolor,
                 activebackground=WQtextcolor
                 ).grid(row=30, column=33)
-            Button(
+            Button( #debugWQ2
                 root, width=10, height=5,  name= "debugWQ2",
                 background=WQtextcolor,
                 activebackground=WQcolor
                 ).grid(row=31, column=33)
-            Button(
+            Button( #debugBP1
                 root, width=10, height=5,  name= "debugBP1",
                 background=BPcolor,
                 activebackground=BPtextcolor
                 ).grid(row=30, column=35)
-            Button(
+            Button( #debugBP2
                 root, width=10, height=5,  name= "debugBP2",
                 background=BPtextcolor,
                 activebackground=BPcolor
                 ).grid(row=31, column=35)
-            Button(
+            Button( #debugBQ1
                 root, width=10, height=5,  name= "debugBQ1",
                 background=BQcolor,
                 activebackground=BQtextcolor
                 ).grid(row=30, column=34)
-            Button(
+            Button( #debugBQ2
                 root, width=10, height=5,  name= "debugBQ2",
                 background=BQtextcolor,
                 activebackground=BQcolor
                 ).grid(row=31, column=34)
-            Button(
+            Button( #debugbuttoncolor1
                 root, width=10, height=5,  name= "debugbuttoncolor1",
                 background=buttonscolor,
                 activebackground=Buttontextcolor
                 ).grid(row=30, column=36)
-            Button(
+            Button( #debugbuttoncolor2
                 root, width=10, height=5,  name= "debugbuttoncolor2",
                 background=Buttontextcolor,
                 activebackground=buttonscolor
                 ).grid(row=31, column=36)
             
+            entry1 = emptycolor1
+            entry2 = emptycolor2
+            entry3 = WPcolor
+            entry4 = WQcolor
+            entry5 = BPcolor
+            entry6 = BQcolor
+            entry7 = buttonscolor
+            entries = True
+            if entries == True:
+                entry1 = Entry(
+                    root, width=12, name= "debugempty1-3",
+                    background= "#FFFFFF"
+                    )
+                entry1.grid(padx=(50,0), row=32, column=30)
+                entry1.bind("<Return>", colorsetter1)
+                entry1.insert(0, emptycolor1)
+                #
+                entry2 = Entry(
+                    root, width=12, name= "debugempty2-3",
+                    background="#FFFFFF"
+                    )
+                entry2.grid(row=32, column=31)
+                entry2.bind("<Return>", colorsetter1)
+                entry2.insert(0, emptycolor2)
+                #
+                entry3 = Entry(
+                    root, width=12, name= "debugWP3",
+                    background="#FFFFFF"
+                    )
+                entry3.grid(row=32, column=32)
+                entry3.bind("<Return>", colorsetter1)
+                entry3.insert(0, WPcolor)
+                #
+                entry4 = Entry(
+                    root, width=12, name= "debugWQ3",
+                    background="#FFFFFF"
+                    )
+                entry4.grid(row=32, column=33)
+                entry4.bind("<Return>", colorsetter1)
+                entry4.insert(0, WQcolor)
+                #
+                entry5 = Entry(
+                    root, width=12, name= "debugBQ3",
+                    background="#FFFFFF"
+                    )
+                entry5.grid(row=32, column=34)
+                entry5.bind("<Return>", colorsetter1)
+                entry5.insert(0, BQcolor)
+                #
+                entry6 = Entry(
+                    root, width=12, name= "debugBP3",
+                    background="#FFFFFF"
+                    )
+                entry6.grid(row=32, column=35)
+                entry6.bind("<Return>", colorsetter1)
+                entry6.insert(0, BPcolor)
+                #
+                entry7 = Entry(
+                    root, width=12, name= "debugbuttoncolor3",
+                    background="#FFFFFF"
+                    )
+                entry7.grid(row=32, column=36)
+                entry7.bind("<Return>", colorsetter1)
+                entry7.insert(0, buttonscolor)
+
         else:
             Button(
                 root, text="End game", width=9,
@@ -1051,7 +1117,8 @@ if guifuctions:
                         else:
                             checkerp = False
         if debugon:
-            Button(
+            global entry1, entry2, entry3, entry4, entry5, entry6, entry7
+            Button( #skip turn
             root, text='Skip Turn', width=9,
             background=buttonscolor,
             foreground=Buttontextcolor,
@@ -1059,7 +1126,7 @@ if guifuctions:
             activeforeground=buttonscolor,
             command=lambda: skiper()
             ).place(x=int((boardx*33+33)/3), y=(boardx*32))
-            Button(
+            Button( #end game
                 root, text="End game", width=9,
                 background=buttonscolor,
                 foreground=Buttontextcolor,
@@ -1067,84 +1134,149 @@ if guifuctions:
                 activeforeground=buttonscolor,
                 command=lambda: ender() 
             ).place(x=int((boardx*33+33)/1.5), y=(boardx*32))
-            Button(
+            Button( #Roll color
                 root, text="Roll color", width=9,
                 background=buttonscolor,
                 foreground=Buttontextcolor,
                 activebackground=Buttontextcolor,
                 activeforeground=buttonscolor,
-                command=lambda: rollcolor3()
+                command=lambda: rollcolor2()
             ).place(x=int((boardx*33+33)/(boardx+4)), y=(boardx*32))
-            Button(
+            Button( #debugempty1-1
                 root, width=10, height=5, name= "debugempty1-1",
                 background=emptycolor1,
                 activebackground=emptytextcolor1
                 ).grid(padx=(50,0), row=30, column=30)
-            Button(
+            Button( #debugempty1-2
                 root, width=10, height=5, name= "debugempty1-2",
                 background=emptytextcolor1,
                 activebackground=emptycolor1
                 ).grid(padx=(50,0), row=31, column=30)
-            Button(
+            Button( #debugempty2-1
                 root, width=10, height=5, name= "debugempty2-1",
                 background=emptycolor2,
                 activebackground=emptytextcolor2
                 ).grid(row=30, column=31)
-            Button(
+            Button( #debugempty2-2
                 root, width=10, height=5, name= "debugempty2-2",
                 background=emptytextcolor2,
                 activebackground=emptycolor2
                 ).grid(row=31, column=31)
-            Button(
+            Button( #debugWP1
                 root, width=10, height=5, name= "debugWP1",
                 background=WPcolor,
                 activebackground=WPtextcolor
                 ).grid(row=30, column=32)
-            Button(
+            Button( #debugWP2
                 root, width=10, height=5, name= "debugWP2",
                 background=WPtextcolor,
                 activebackground=WPcolor
                 ).grid(row=31, column=32)
-            Button(
+            Button( #debugWQ1
                 root, width=10, height=5,  name= "debugWQ1",
                 background=WQcolor,
                 activebackground=WQtextcolor
                 ).grid(row=30, column=33)
-            Button(
+            Button( #debugWQ2
                 root, width=10, height=5,  name= "debugWQ2",
                 background=WQtextcolor,
                 activebackground=WQcolor
                 ).grid(row=31, column=33)
-            Button(
+            Button( #debugBP1
                 root, width=10, height=5,  name= "debugBP1",
                 background=BPcolor,
                 activebackground=BPtextcolor
                 ).grid(row=30, column=35)
-            Button(
+            Button( #debugBP2
                 root, width=10, height=5,  name= "debugBP2",
                 background=BPtextcolor,
                 activebackground=BPcolor
                 ).grid(row=31, column=35)
-            Button(
+            Button( #debugBQ1
                 root, width=10, height=5,  name= "debugBQ1",
                 background=BQcolor,
                 activebackground=BQtextcolor
                 ).grid(row=30, column=34)
-            Button(
+            Button( #debugBQ2
                 root, width=10, height=5,  name= "debugBQ2",
                 background=BQtextcolor,
                 activebackground=BQcolor
                 ).grid(row=31, column=34)
-            Button(
+            Button( #debugbuttoncolor1
                 root, width=10, height=5,  name= "debugbuttoncolor1",
                 background=buttonscolor,
                 activebackground=Buttontextcolor
                 ).grid(row=30, column=36)
-            Button(
+            Button( #debugbuttoncolor2
                 root, width=10, height=5,  name= "debugbuttoncolor2",
                 background=Buttontextcolor,
                 activebackground=buttonscolor
                 ).grid(row=31, column=36)
+            
+            entry1 = emptycolor1
+            entry2 = emptycolor2
+            entry3 = WPcolor
+            entry4 = WQcolor
+            entry5 = BPcolor
+            entry6 = BQcolor
+            entry7 = buttonscolor
+            entries = True
+            if entries == True:
+                entry1 = Entry(
+                    root, width=12, name= "debugempty1-3",
+                    background= "#FFFFFF"
+                    )
+                entry1.grid(padx=(50,0), row=32, column=30)
+                entry1.bind("<Return>", colorsetter2)
+                entry1.insert(0, emptycolor1)
+                #
+                entry2 = Entry(
+                    root, width=12, name= "debugempty2-3",
+                    background="#FFFFFF"
+                    )
+                entry2.grid(row=32, column=31)
+                entry2.bind("<Return>", colorsetter2)
+                entry2.insert(0, emptycolor2)
+                #
+                entry3 = Entry(
+                    root, width=12, name= "debugWP3",
+                    background="#FFFFFF"
+                    )
+                entry3.grid(row=32, column=32)
+                entry3.bind("<Return>", colorsetter2)
+                entry3.insert(0, WPcolor)
+                #
+                entry4 = Entry(
+                    root, width=12, name= "debugWQ3",
+                    background="#FFFFFF"
+                    )
+                entry4.grid(row=32, column=33)
+                entry4.bind("<Return>", colorsetter2)
+                entry4.insert(0, WQcolor)
+                #
+                entry5 = Entry(
+                    root, width=12, name= "debugBP3",
+                    background="#FFFFFF"
+                    )
+                entry5.grid(row=32, column=35)
+                entry5.bind("<Return>", colorsetter2)
+                entry5.insert(0, BPcolor)
+                #
+                entry6 = Entry(
+                    root, width=12, name= "debugBQ3",
+                    background="#FFFFFF"
+                    )
+                entry6.grid(row=32, column=34)
+                entry6.bind("<Return>", colorsetter2)
+                entry6.insert(0, BQcolor)
+                #
+                entry7 = Entry(
+                    root, width=12, name= "debugbuttoncolor3",
+                    background="#FFFFFF"
+                    )
+                entry7.grid(row=32, column=36)
+                entry7.bind("<Return>", colorsetter2)
+                entry7.insert(0, buttonscolor)
             
         else:
             Button(
@@ -1283,6 +1415,74 @@ if guifuctions:
         BPtextcolor = Importfunc.invert_color(BPcolor)
         BQtextcolor = Importfunc.invert_color(BQcolor)
         Buttontextcolor = Importfunc.invert_color(buttonscolor)
+        draw_board2()
+    def colorsetter1(event):
+        global entry1, entry2, entry3, entry4, entry5, entry6, entry7, emptycolor1, emptycolor2, WPcolor, WQcolor, BQcolor, BPcolor, buttonscolor, emptytextcolor1, emptytextcolor2, WPtextcolor, WQtextcolor, BPtextcolor, BQtextcolor, Buttontextcolor
+        value = [entry1.get(),entry2.get(),entry3.get(),entry4.get(),entry5.get(),entry6.get(),entry7.get()]
+        for entry in range(len(value)):
+            hexdec = False
+            colored = value[entry].strip("#")
+            if len(colored) == 6:
+                try:
+                    int(colored, 16)
+                    hexdec = True
+                except ValueError:
+                    x2 =1
+            if entry == 0 and hexdec == True:
+                emptycolor1 = value[0]
+                emptytextcolor1 = Importfunc.invert_color(emptycolor1)
+            elif entry == 1 and hexdec == True:
+                emptycolor2 = value[1]
+                emptytextcolor2 = Importfunc.invert_color(emptycolor2)
+            elif entry == 2 and hexdec == True:
+                WPcolor = value[2]
+                WPtextcolor = Importfunc.invert_color(WPcolor)
+            elif entry == 3 and hexdec == True:
+                WQcolor = value[3]
+                WQtextcolor = Importfunc.invert_color(WQcolor)
+            elif entry == 4 and hexdec == True:
+                BQcolor = value[4]
+                BQtextcolor = Importfunc.invert_color(BQcolor)
+            elif entry == 5 and hexdec == True:
+                BPcolor = value[5]
+                BPtextcolor = Importfunc.invert_color(BPcolor)
+            elif entry == 6 and hexdec == True:
+                buttonscolor = value[6]
+                Buttontextcolor = Importfunc.invert_color(buttonscolor)
+        draw_board()
+    def colorsetter2(event):
+        global entry1, entry2, entry3, entry4, entry5, entry6, entry7, emptycolor1, emptycolor2, WPcolor, WQcolor, BQcolor, BPcolor, buttonscolor, emptytextcolor1, emptytextcolor2, WPtextcolor, WQtextcolor, BPtextcolor, BQtextcolor, Buttontextcolor
+        value = [entry1.get(),entry2.get(),entry3.get(),entry4.get(),entry5.get(),entry6.get(),entry7.get()]
+        for entry in range(len(value)):
+            hexdec = False
+            colored = value[entry].strip("#")
+            if len(colored) == 6:
+                try:
+                    int(colored, 16)
+                    hexdec = True
+                except ValueError:
+                    x2 =1
+            if entry == 0 and hexdec == True:
+                emptycolor1 = value[0]
+                emptytextcolor1 = Importfunc.invert_color(emptycolor1)
+            elif entry == 1 and hexdec == True:
+                emptycolor2 = value[1]
+                emptytextcolor2 = Importfunc.invert_color(emptycolor2)
+            elif entry == 2 and hexdec == True:
+                WPcolor = value[2]
+                WPtextcolor = Importfunc.invert_color(WPcolor)
+            elif entry == 3 and hexdec == True:
+                WQcolor = value[3]
+                WQtextcolor = Importfunc.invert_color(WQcolor)
+            elif entry == 4 and hexdec == True:
+                BQcolor = value[4]
+                BQtextcolor = Importfunc.invert_color(BQcolor)
+            elif entry == 5 and hexdec == True:
+                BPcolor = value[5]
+                BPtextcolor = Importfunc.invert_color(BPcolor)
+            elif entry == 6 and hexdec == True:
+                buttonscolor = value[6]
+                Buttontextcolor = Importfunc.invert_color(buttonscolor)
         draw_board2()
 
 extrafuctions = True
